@@ -1,16 +1,16 @@
 # [PyTorch] Recommender system 
 ## Introduction
-This project is evaluate the quality of the AutoEncoder model on [Movielens-1M dataset](https://github.com/windhashira06/RS-AutoEncoder/tree/main/movielens-1m) and suggest to the user which movies they might like.
+This project is evaluate the quality of the AutoEncoder model on [Movielens-1M dataset](https://github.com/windhashira06/RS-AutoEncoder/tree/main/movielens-1m) and recommends to the user which movies they might like.
 ## Datasets
-The Movielens 1M dataset is a popular dataset in the fields of Machine Learning and Data Mining. This dataset consists of 1 million movie ratings rated by 6000 users with over 4000 different movies. This dataset is devided into 2 datasets, that is the train set (750121 ratings) and the test set (250088 ratings).
+The Movielens 1M dataset is popular dataset in the fields of Machine Learning and Data Mining. This dataset consists of 1 million movie ratings rated by 6000 users with over 4000 different movies. This dataset is divided into 2 datasets, that is the train set (750121 ratings) and the test set (250088 ratings).
 ## Model
- The AutoEncoder model used in this task consists of 1 input layer, 3 hidden layers and 1 output layer. The number of hidden units in each hidden layer are 200, 100 and 200 respectively.
+ The AutoEncoder model used in this task consists of 1 input layer, 3 hidden layers, and 1 output layer. The number of hidden units in each hidden layer is 200, 100, and 200 respectively.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/121651344/225369029-74d69875-d8da-48b8-a046-bfd8c7f05b90.png" alt="autoencoder">
 </p>
 
 ## Training and Evaluation
-__1. Training__: The model's input is a utility matrix containing values from 0 to 5, where 0 is the value representing movies that have not been rated by the user and 1 to 5 are user-rated values. The model will learn to represent user-movies as latents vector in the new feature space from which the model will predictions for empty positions (value is 0) in the utility matrix. 
+__1. Training__: The model's input is a utility matrix containing values from 0 to 5, where 0 is the value representing movies that have not been rated by the user and 1 to 5 are user-rated values. The model will learn to represent user-movies as a latents vector in the new feature space from which the model will predictions for empty positions (value is 0) in the utility matrix. 
 ```
 for user_nb in range(self.num_users):
     inputs = Variable(train_ds[user_nb]).unsqueeze(0).to(device)
@@ -30,8 +30,8 @@ for user_nb in range(self.num_users):
     s += 1
     self.optimizer.step()
 ```
-   The model takes each user-movies vector as input, computes output, compute loss and optimizer                                              
-   - Note: We need to multiply the output matrix by a mask matrix to ensure that any positions of the target matrix are 0, those positions of the output matrix are also 0.            
+   The model takes each user-movies vector as input computes output, compute loss, and optimizer                                              
+   - Note: We need to multiply the output matrix by a mask matrix to ensure that any positions of the target matrix are 0, and those positions of the output matrix are also 0.            
 
 __2. Evaluation__: To evaluate model quality, I use RMSE loss and Top-k Accuracy. Below are the evaluation results:
 - RMSE loss:
@@ -45,7 +45,7 @@ __2. Evaluation__: To evaluate model quality, I use RMSE loss and Top-k Accuracy
   | :----:|:------:|
   | 69.8725| 77.4966|
 ## Give Recommendations
-The model will restore the missing values in the utility matrix, then select k (optional) positions containing the largest values (the larger value, the more user will like that movie) corresponding to k-movies's id that the user will probably like very much.         
+The model will restore the missing values in the utility matrix, then select k (optional) positions containing the largest values (the larger value, the more user will like that movie) corresponding to k-movies' id that the user will probably like very much.         
 Below are some recommended results:              
 ```
 ==> ID USER:  8
